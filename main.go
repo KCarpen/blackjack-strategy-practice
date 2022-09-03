@@ -2,11 +2,16 @@ package main
 
 import (
 	"black-strat/utils"
+	"flag"
 	"fmt"
 )
 
 func main() {
-	outcomes := utils.GeneratePlayerActionsMap()
+	csvFilename := flag.String("csv", "playerActions.csv", "a CSV file in the format 'players hand,dealers hand,recommended action'")
+
+	flag.Parse()
+
+	playerActionsMap := utils.GeneratePlayerActionsMap(*csvFilename)
 
 	for {
 		playerHand, dealerHand := utils.GenerateHands()
@@ -18,7 +23,7 @@ func main() {
 		var userAnswer string
 		fmt.Scan(&userAnswer)
 
-		correctPlayerAction := utils.GenerateCorrectPlayerAction(userAnswer, &playerHand, &dealerHand, &outcomes)
+		correctPlayerAction := utils.GenerateCorrectPlayerAction(userAnswer, &playerHand, &dealerHand, &playerActionsMap)
 
 		if userAnswer == correctPlayerAction {
 			fmt.Print("Correct!\n\n")
