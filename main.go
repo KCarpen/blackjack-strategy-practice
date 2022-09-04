@@ -8,7 +8,6 @@ import (
 
 func main() {
 	csvFilename := flag.String("csv", "playerActions.csv", "a CSV file in the format 'players hand,dealers hand,recommended action'")
-
 	flag.Parse()
 
 	playerActionsMap := utils.GeneratePlayerActionsMap(*csvFilename)
