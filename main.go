@@ -22,7 +22,7 @@ func main() {
 		var userAnswer string
 		fmt.Scan(&userAnswer)
 
-		correctPlayerAction := utils.GenerateCorrectPlayerAction(userAnswer, &playerHand, &dealerHand, &playerActionsMap)
+		correctPlayerAction := utils.GenerateCorrectPlayerAction(userAnswer, &playerHand, &dealerHand, playerActionsMap)
 
 		if userAnswer == correctPlayerAction {
 			fmt.Print("Correct!\n\n")
