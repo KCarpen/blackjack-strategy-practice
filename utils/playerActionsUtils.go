@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 type Actions = map[string]string
@@ -20,8 +21,13 @@ func GeneratePlayerActionsMap(csvFilename string) Actions {
 	csvReader := csv.NewReader(f)
 	records, _ := csvReader.ReadAll()
 
+	actions := Actions{}
+
 	for _, record := range records {
-		fmt.Println(record)
+		key := fmt.Sprintf("%s;%s", strings.TrimSpace(record[0]), strings.TrimSpace(record[1]))
+		value := strings.TrimSpace(record[2])
+
+		actions[key] = value
 	}
 
 	return actions
@@ -30,4 +36,13 @@ func GeneratePlayerActionsMap(csvFilename string) Actions {
 func GenerateCorrectPlayerAction(userAnswer string, playerHand *defs.PlayerHand, dealerHand *defs.DealerHand, actions *Actions) string {
 
 	return "split"
+}
+
+func GeneratePlayerActionsKey(playerHand *defs.PlayerHand, dealerHand *defs.DealerHand) string {
+	if playerHand.Card1.Symbol != playerHand.Card2.Symbol &&
+		playerHand.Card1.Symbol != "A" &&
+		playerHand.Card2.Symbol != "A" {
+		return fmt.Sprintf("%d;%s", playerHand.Card1.Value+playerHand.Card2.Value, dealerHand.ShowingCard.Symbol)
+	}
+	return fmt.Sprintf("%s-%s;%s", playerHand.Card1.Symbol, playerHand.Card2.Symbol, dealerHand.ShowingCard.Symbol)
 }
