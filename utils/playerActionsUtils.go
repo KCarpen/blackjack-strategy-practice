@@ -33,16 +33,42 @@ func GeneratePlayerActionsMap(csvFilename string) Actions {
 	return actions
 }
 
-func GenerateCorrectPlayerAction(userAnswer string, playerHand *defs.PlayerHand, dealerHand *defs.DealerHand, actions *Actions) string {
-
-	return "split"
+func GenerateCorrectPlayerAction(playerHand *defs.PlayerHand, dealerHand *defs.DealerHand, actions Actions) string {
+	key := GeneratePlayerActionsKey(playerHand, dealerHand)
+	fmt.Printf("key: %s\n", key)
+	return actions[key]
 }
 
 func GeneratePlayerActionsKey(playerHand *defs.PlayerHand, dealerHand *defs.DealerHand) string {
+	var dealerCardSymbol string
+
+	if dealerHand.ShowingCard.Value == 10 {
+		dealerCardSymbol = "10"
+	} else {
+		dealerCardSymbol = dealerHand.ShowingCard.Symbol
+	}
+
+	if playerHand.Card1.Value == 10 {
+		playerHand.Card1.Symbol = "10"
+	}
+
+	if playerHand.Card2.Value == 10 {
+		playerHand.Card2.Symbol = "10"
+	}
+
 	if playerHand.Card1.Symbol != playerHand.Card2.Symbol &&
 		playerHand.Card1.Symbol != "A" &&
 		playerHand.Card2.Symbol != "A" {
-		return fmt.Sprintf("%d;%s", playerHand.Card1.Value+playerHand.Card2.Value, dealerHand.ShowingCard.Symbol)
+
+		playerSum := playerHand.Card1.Value + playerHand.Card2.Value
+		if playerSum >= 17 {
+			playerSum = 17
+			dealerCardSymbol = "x"
+		}
+		return fmt.Sprintf("%d;%s", playerSum, dealerCardSymbol)
 	}
-	return fmt.Sprintf("%s-%s;%s", playerHand.Card1.Symbol, playerHand.Card2.Symbol, dealerHand.ShowingCard.Symbol)
+
+	lowerPlayerCard, higherPlayerCard := sortCardsDesc(playerHand.Card1, playerHand.Card2, cards)
+
+	return fmt.Sprintf("%s-%s;%s", higherPlayerCard.Symbol, lowerPlayerCard.Symbol, dealerCardSymbol)
 }
