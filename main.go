@@ -14,20 +14,25 @@ func main() {
 
 	for {
 		playerHand, dealerHand := utils.GenerateHands()
+		correctPlayerAction := utils.GenerateCorrectPlayerAction(&playerHand, &dealerHand, playerActionsMap)
+
 		fmt.Printf("Player: %s, %s\n", playerHand.Card1.Symbol, playerHand.Card2.Symbol)
 		fmt.Printf("Dealer: %s\n", dealerHand.ShowingCard.Symbol)
-		fmt.Println("Should you stand, hit, split, or double?")
-		fmt.Print(">> ")
 
-		var userAnswer string
-		fmt.Scan(&userAnswer)
-
-		correctPlayerAction := utils.GenerateCorrectPlayerAction(userAnswer, &playerHand, &dealerHand, playerActionsMap)
-
-		if userAnswer == correctPlayerAction {
-			fmt.Print("Correct!\n\n")
+		if correctPlayerAction == "blackjack!" {
+			fmt.Print("$$$ Blackjack! $$$\n\n")
 		} else {
-			fmt.Printf("Incorrect! You should %s\n\n", correctPlayerAction)
+			fmt.Println("Should you stand, hit, split, or double?")
+			fmt.Print(">> ")
+
+			var userAnswer string
+			fmt.Scan(&userAnswer)
+
+			if userAnswer == correctPlayerAction {
+				fmt.Print("Correct!\n\n")
+			} else {
+				fmt.Printf("Incorrect! You should %s\n\n", correctPlayerAction)
+			}
 		}
 	}
 }
