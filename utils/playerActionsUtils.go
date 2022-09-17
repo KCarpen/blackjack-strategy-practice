@@ -34,12 +34,12 @@ func GeneratePlayerActionsMap(csvFilename string) Actions {
 }
 
 func GenerateCorrectPlayerAction(playerHand *defs.PlayerHand, dealerHand *defs.DealerHand, actions Actions) string {
-	key := GeneratePlayerActionsKey(playerHand, dealerHand)
+	key := generatePlayerActionsKey(playerHand, dealerHand)
 	fmt.Printf("key: %s\n", key)
 	return actions[key]
 }
 
-func GeneratePlayerActionsKey(playerHand *defs.PlayerHand, dealerHand *defs.DealerHand) string {
+func generatePlayerActionsKey(playerHand *defs.PlayerHand, dealerHand *defs.DealerHand) string {
 	var dealerCardSymbol string
 
 	if dealerHand.ShowingCard.Value == 10 {
