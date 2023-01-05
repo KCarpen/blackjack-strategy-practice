@@ -35,7 +35,7 @@ func GeneratePlayerActionsMap(csvFilename string) Actions {
 
 func GenerateCorrectPlayerAction(playerHand *defs.PlayerHand, dealerHand *defs.DealerHand, actions Actions) string {
 	key := generatePlayerActionsKey(playerHand, dealerHand)
-	fmt.Printf("key: %s\n", key)
+	// fmt.Printf("key: %s\n", key)
 	return actions[key]
 }
 
