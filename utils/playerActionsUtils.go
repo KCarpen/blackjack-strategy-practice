@@ -1,7 +1,7 @@
 package utils
 
 import (
-	defs "black-strat/definitions"
+	models "black-strat/models"
 	"encoding/csv"
 	"fmt"
 	"log"
@@ -33,13 +33,13 @@ func GeneratePlayerActionsMap(csvFilename string) Actions {
 	return actions
 }
 
-func GenerateCorrectPlayerAction(playerHand *defs.PlayerHand, dealerHand *defs.DealerHand, actions Actions) string {
+func GenerateCorrectPlayerAction(playerHand *models.PlayerHand, dealerHand *models.DealerHand, actions Actions) string {
 	key := generatePlayerActionsKey(playerHand, dealerHand)
 	// fmt.Printf("key: %s\n", key)
 	return actions[key]
 }
 
-func generatePlayerActionsKey(playerHand *defs.PlayerHand, dealerHand *defs.DealerHand) string {
+func generatePlayerActionsKey(playerHand *models.PlayerHand, dealerHand *models.DealerHand) string {
 	var dealerCardSymbol string
 
 	if dealerHand.ShowingCard.Value == 10 {

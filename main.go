@@ -1,11 +1,13 @@
 package main
 
 import (
+	"black-strat/art"
 	"black-strat/games"
 	"fmt"
 )
 
 func main() {
+	art.Card()
 	switch game := selectGame(); game {
 	case 0:
 		games.RunBasicStrategy()

@@ -1,4 +1,4 @@
-package definitions
+package models
 
 type PlayerHand struct {
 	Card1 Card
